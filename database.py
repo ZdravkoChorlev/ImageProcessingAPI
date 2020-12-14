@@ -1,17 +1,25 @@
 import psycopg2
 import logging
 import json
+import os
 
+from dotenv import load_dotenv
 from psycopg2 import Error
+
+load_dotenv()
+
+POSTGRES_USER = os.environ.get("POSTGRES_USER")
+POSTGRES_PASSWORD = os.environ.get("POSTGRES_PASSWORD")
+POSTGRES_DB = os.environ.get("POSTGRES_DB")
 
 
 def db(query):
     try:
-        connection = psycopg2.connect(user="postgres",
-                                      password="postgres",
+        connection = psycopg2.connect(user=POSTGRES_USER,
+                                      password=POSTGRES_PASSWORD,
                                       host="127.0.0.1",
                                       port="5432",
-                                      database="imageapi")
+                                      database=POSTGRES_DB)
 
         cursor = connection.cursor()
 
@@ -40,4 +48,3 @@ def db(query):
         if (connection):
             cursor.close()
             connection.close()
-            print("PostgreSQL connection is closed")
