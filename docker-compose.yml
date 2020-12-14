@@ -1,0 +1,36 @@
+version: "3"
+
+services:
+  db:
+    image: postgres:11
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=images
+  image-processing-app:
+    build: .
+    command: bash -c "uvicorn main:app --host 0.0.0.0 --port 8000 --reload"
+    volumes:
+      - .:/code
+    ports:
+      - "127.0.0.1:8000:8000"
+    links:
+      - db
+    environment:
+      - PGHOST=db
+      - PGDATABASE=postgres
+      - PGUSER=postgres
+    depends_on:
+      - db
+  pgadmin:
+    container_name: pgadmin
+    image: dpage/pgadmin4
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=pgadmin4@pgadmin.org
+      - PGADMIN_DEFAULT_PASSWORD=admin
+    ports:
+      - "5050:80"
+    depends_on:
+      - db

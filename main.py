@@ -1,24 +1,38 @@
 import requests
 import uvicorn
+import database
+import logging
 
+from utilities import is_url_valid, is_url_img
 from image_processing import ProcessImage
 from fastapi import FastAPI
 from PIL import Image
 
+INFO_MSG = ("This is simple web API for image processing v. 1.0.0")
+NOT_IMG_MSG = "The URL does not contain image"
+WRONG_URL_MSG = "The URL is wrong"
 
 app = FastAPI()
+logging.basicConfig(filename='error.log', level=logging.DEBUG)
 
 
 @app.get("/")
 def index():
-    return {"message": "Hello"}
+    return INFO_MSG
 
 
 @app.post("/image")
 def get_img_info(img_url):
-
     img = ProcessImage()
-    dict_result = {}
+    img_info = {}
+
+    if not is_url_valid(img_url):
+        logging.error('Wrong URL', img_url)
+        return WRONG_URL_MSG
+
+    if not is_url_img(img_url):
+        logging.error('Wrong image URL', img_url)
+        return NOT_IMG_MSG
 
     response = requests.get(img_url, stream=True)
     raw_img = response.raw
@@ -31,13 +45,10 @@ def get_img_info(img_url):
     img_info = {"blurhash": img_blurhash, "sha1": img_sha1,
                 "dimensions": img_dimensions, "type": img_type}
 
+    database.db(img_info)
+
     return img_info
 
 
-@ app.get("/retrieve")
-def retrieve_imgs():
-    return "Success"
-
-
 if __name__ == "__main__":
-    uvicorn.run(app, host="localhost", port=8000)
+    uvicorn.run(app, host="0.0.0.0", port=8000)

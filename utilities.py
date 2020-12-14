@@ -1,14 +1,14 @@
-import validators
 import requests
+import validators
 
 
-def is_url_valid(self, url):
+def is_url_valid(url):
     valid = validators.url(url)
 
     return valid
 
 
-def is_url_img(self, url):
+def is_url_img(url):
     response = requests.head(url)
     content = response.headers.get('content-type')
     img_pattern = "image"
