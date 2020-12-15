@@ -14,6 +14,7 @@ services:
     command: bash -c "uvicorn main:app --host 0.0.0.0 --port 8000 --reload"
     volumes:
       - "${PWD}/error.log:/error.log:rw"
+      - "${PWD}/db_error.log:/db_error.log:rw"
     ports:
       - "127.0.0.1:8000:8000"
     links:
