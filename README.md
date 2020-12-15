@@ -16,7 +16,8 @@ You must have installed docker, docker-compose, python version >= 3.8, pipenv/pi
 
 2. Create .env file in the repository directory where the credentials for postgres database will be stored
     - It must contains the credentials fo PostgreSQL server and PgAdmin Client:
-     ```POSTGRES_USER=postgres
+     ```
+        POSTGRES_USER=postgres
         POSTGRES_PASSWORD=postgres
         POSTGRES_DB=imageapi
         PGADMIN_DEFAULT_EMAIL=pgadmin4@pgadmin.org
@@ -25,7 +26,6 @@ You must have installed docker, docker-compose, python version >= 3.8, pipenv/pi
 
 3. Create error.log and db_error.log files
 
-4. Run `pip freeze > requirements.txt`
 4. Run `docker-compose up` command
 
 ## Available Endpoints
@@ -34,8 +34,11 @@ When the docker compose is running we can access the functionality of the API
 We have three available endpoints
 
 1. `localhost:8000/` - This is default endpoint. It gives the user basic info the API
+    - This endpoint can be accessed with GET request
 
 2. `localhost:8000/image?img_url=` - This is the main endpoint. Here we can pass a URL and get information about an image
+    - This endpoint can be accessed with GET request
+
     - Example:
     `localhost:8000/image?img_url=http://someurlimage.com"`
 
