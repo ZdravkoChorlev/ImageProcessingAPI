@@ -28,7 +28,7 @@ def index():
     return INFO_MSG
 
 
-@app.post("/image")
+@app.get("/image")
 def get_img_info(img_url):
     """ This endpoint takes URL as param and returns image
      information(sha1 code, dimensions, type and blurhash) as JSON format
