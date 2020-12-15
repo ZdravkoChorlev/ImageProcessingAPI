@@ -25,6 +25,7 @@ You must have installed docker, docker-compose, python version >= 3.8, pipenv/pi
 
 3. Create error.log and db_error.log files
 
+4. Run `pip freeze > requirements.txt`
 4. Run `docker-compose up` command
 
 ## Available Endpoints
