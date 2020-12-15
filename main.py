@@ -64,7 +64,8 @@ def get_img_info(img_url):
                 "dimensions": img_dimensions, "type": img_type}
 
     conn = db.connect()
-    db.insert_data(img_info, conn)
+    if (conn):
+        db.insert_data(img_info, conn)
 
     return img_info
 

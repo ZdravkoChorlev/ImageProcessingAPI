@@ -39,8 +39,12 @@ class ProcessImage():
         Returns:
             int: blurhash of the image
         """
-        blurhash_code = blurhash.encode(
-            resp_raw, x_components=4, y_components=5)
+        try:
+            blurhash_code = blurhash.encode(
+                resp_raw, comp_x=4, comp_y=5)
+        except Exception as error:
+            logging.error("Cannot get blurhash: ", error)
+            return None
 
         return blurhash_code
 

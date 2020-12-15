@@ -31,7 +31,7 @@ class Database():
         try:
             connection = psycopg2.connect(user=POSTGRES_USER,
                                           password=POSTGRES_PASSWORD,
-                                          host="127.0.0.1",
+                                          host="db",
                                           port="5432",
                                           database=POSTGRES_DB)
         except Exception as error:
@@ -39,8 +39,7 @@ class Database():
 
         return connection
 
-    @staticmethod
-    def create_table(connection):
+    def create_table(self, connection):
         """ Extracts image's sha1 code from HTTP request
 
             Params:
@@ -58,8 +57,7 @@ class Database():
         except Exception as error:
             logging.error("Create table error: ", error)
 
-    @staticmethod
-    def insert_data(data, connection):
+    def insert_data(self, data, connection):
         """ Runs insert query against the database
 
             Params:
@@ -67,7 +65,7 @@ class Database():
                 connection (str): the database connection
         """
 
-        Database.create_table(connection)
+        Database.create_table(self, connection)
 
         cursor = connection.cursor()
         key = data["sha1"]
