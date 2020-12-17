@@ -40,7 +40,7 @@ class Database():
         return connection
 
     def create_table(self, connection):
-        """ Create table for storing images information only if the table does not exists
+        """ Creates table for storing images information only if the table does not exists
 
             Params:
                 connection (str): the database connection
