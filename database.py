@@ -40,7 +40,7 @@ class Database():
         return connection
 
     def create_table(self, connection):
-        """ Extracts image's sha1 code from HTTP request
+        """ Create table for storing images information only if the table does not exists
 
             Params:
                 connection (str): the database connection
@@ -68,7 +68,6 @@ class Database():
         Database.create_table(self, connection)
 
         cursor = connection.cursor()
-        key = data["sha1"]
         json_object = json.dumps(data, indent=2)
         insert_query = """INSERT INTO images(IMAGES_INFO) VALUES ('{0}')""".format(
             json_object)
